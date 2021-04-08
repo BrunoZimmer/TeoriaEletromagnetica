@@ -6,13 +6,11 @@
 %campo magnÈtico na posiÁ„o (x = 0, y = 0, z = 3,3 m), 
 %considere K = 5,0 ax A/m e a = 5,8 m.BZ
 
-
-
 clc
 clear all
 close all
 
-u0=4*pi*10^(-7); % Permeabilidade magn√©tica do espa√ßo livre (em H/m)
+u0=4*pi*10^(-7); % Permeabilidade magnetica do espaco livre (em H/m)
 
 a = 5.8; 
 zteste = 3.3; % tamanho em z
@@ -25,9 +23,9 @@ dx=passo;
 dy=passo;
 dz=passo;
 
-x= -2*dx:dx:2*dx; %variacao da coordenada x onde sera° calculado B
-y= -D:dy:D; %variacao da coordenada y onde sera° calculado B
-z= -zteste:dz:zteste; %variacao da coordenada z onde sera° calculado B
+x= -2*dx:dx:2*dx; %variacao da coordenada x onde sera calculado H
+y= -D:dy:D; %variacao da coordenada y onde sera° calculado H
+z= -zteste:dz:zteste; %variacao da coordenada z onde sera° calculado H
 
 % Inicializa a densidade de fluxo magnetico
 
@@ -41,8 +39,8 @@ ymedio=ceil(length(y)/2);
 zmedio=ceil(length(z)/2);
 
 %dimens„o da lamina de corrente
-xl = -D:dx:D; %variacao da coordenada x onde sera° calculado B
-yl = -a:dy:a; %variacao da coordenada y onde sera° calculado B
+xl = -D:dx:D; %variacao da coordenada x da placa
+yl = -a:dy:a; %variacao da coordenada y da placa
 
 
 for i = 1:length(x)% varre a coordenada x onde B ser√° calculado
@@ -50,28 +48,27 @@ for i = 1:length(x)% varre a coordenada x onde B ser√° calculado
   for j = 1: length(y)  % varre a coordenada y onde B ser√° calculado
     for k = 1:length(z) % varre a coordenada z onde B ser√° calculado
 	
-      for m = 1:length(xl)  % varre a coordenada phil, onde existe a corrente
-        for n = 1:length(yl)  % varre a coordenada phil, onde existe a corrente
+      for m = 1:length(xl)  % varre a coordenada xl, onde existe a corrente
+        for n = 1:length(yl)  % varre a coordenada yl, onde existe a corrente
         
-            r = [x(i),y(j),z(k)];  %vetor posi√ß√£o do ponto de campo (onde calculamos B)
+            r = [x(i),y(j),z(k)];  %vetor posicao do ponto de campo (onde calculamos B)
 
             rl = [xl(m), yl(n), 0];
 
             K = [Kx, 0, 0];
 
-            % Agora calculamos o produto vetorial dA x (r-rl)
-
+            % Agora calculamos o produto vetorial K x (r-rl)
             K_x_rrl = cross(K, r-rl);
 
 
-            % Utilizamos a condi√ß√£o abaixo para evitar a divis√£o por zero, no caso em que r e rl s√£o iguais.
+            % Utilizamos a condicao abaixo para evitar a divisao por zero, no caso em que r e rl s√£o iguais.
 
             if (((r-rl)*(r-rl)') > passo/2)       
-                dB_ijk = K_x_rrl'/(sqrt((r-rl)*(r-rl)')^3); % essa √© a contribui√ß√£o dB devida a esse dL
+                dH_ijk = K_x_rrl'/(sqrt((r-rl)*(r-rl)')^3); % essa √© a contribui√ß√£o dB devida a esse dL
 
-                Hx(i,j,k) = Hx(i,j,k) + dB_ijk(1)*dx*dy; 
-                Hy(i,j,k) = Hy(i,j,k) + dB_ijk(2)*dx*dy;
-                Hz(i,j,k) = Hz(i,j,k) + dB_ijk(3)*dx*dy;
+                Hx(i,j,k) = Hx(i,j,k) + dH_ijk(1)*dx*dy; 
+                Hy(i,j,k) = Hy(i,j,k) + dH_ijk(2)*dx*dy;
+                Hz(i,j,k) = Hz(i,j,k) + dH_ijk(3)*dx*dy;
 
             end
         end
@@ -95,4 +92,3 @@ quiver(Y, Z, squeeze(Hy(xmedio,:,:))', squeeze(Hz(xmedio,:,:))');
 
 xlabel('eixo y (m)')
 ylabel('eixo z (m)')
-title('J no plano yz ');

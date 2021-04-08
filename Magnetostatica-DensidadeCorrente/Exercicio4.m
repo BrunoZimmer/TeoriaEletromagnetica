@@ -33,9 +33,6 @@ Jy(:,:,:) = zeros(length(x),length(y),length(z));
 Jz(:,:,:) = zeros(length(x),length(y),length(z));
 
 
-% �?ndice do valor médio dos vetores de x, y e z.
-% (Neste exemplo, são os índices em que x=y=z=0.)
-
 xmedio=ceil(length(x)/2);
 ymedio=ceil(length(y)/2);
 zmedio=ceil(length(z)/2);

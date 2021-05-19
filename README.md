@@ -9,7 +9,6 @@ Exercícios resolvidos, em sua maioria, em matlab(alguns em python) com resultad
 
 ## Índice de desafios
 - [Lei de Coulomb e Gauss](/Coulomb-CampEletrico-Gauss)
-	Exercicios de campo eletrico, lei de coulomb e lei de gauss.
 
 - [Eletrodinâmica](/Eletrodinamica-CorrenteDeslocamento)
 	
